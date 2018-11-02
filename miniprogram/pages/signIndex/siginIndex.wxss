@@ -1,0 +1,41 @@
+/* miniprogram/pages/signIndex/siginIndex.wxss */
+.top{
+ height: 30vh;
+ border-bottom: 0px solid #dedede;
+ background: #fff;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.top .img{
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.top .text{
+  text-align: center;
+  font-size: 14px;
+  color: #333333;
+}
+
+.btn{
+  line-height: 46px;
+  font-size: 18px;
+  color: #FFFFFF;
+  text-align:center;
+  margin:50px 30px;
+  border-radius:2px;
+}
+
+.active{
+  background:#00CD00;
+}
+
+.openid1{
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}

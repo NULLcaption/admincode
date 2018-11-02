@@ -1,0 +1,60 @@
+/* pages/chooseLib/chooseLib.wxss */
+
+@import "../../style/guide.wxss";
+
+.black {
+  color: black;
+}
+
+.list .content{
+  flex-grow: 1;
+  display:flex;
+}
+
+.list .content image{
+  flex: 0 0 auto;
+  height: 50px;
+  width: 50px;
+  padding:10px;
+}
+
+.list .content .text{
+  flex-grow: 1;
+  font-size: 16px;
+}
+
+.list .content .title{
+  height: 25px;
+  overflow: hidden;
+}
+
+
+.list .content .price{
+  display: flex;
+  font-size: 14px;
+  padding-top:10px; 
+}
+
+.list .content .price text:nth-child(1){
+  color: #ff5f19;
+  flex: 1 0 50%;
+}
+
+.list .content .price text:nth-child(2){
+  color: #999999;
+  flex: 1 0 50%;
+  text-align: right;
+}
+
+.btn{
+  height: 8vh;
+  line-height: 8vh;
+  text-align: center;
+  background:#00CD00;
+  font-size: 16px;
+  color: #fff;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  padding:8px;
+}

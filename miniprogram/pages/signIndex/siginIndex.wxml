@@ -1,0 +1,18 @@
+<!--miniprogram/pages/signIndex/siginIndex.wxml-->
+<scroll-view scroll-y style='height:100vh'>
+  <!-- 微信获取到的信息 -->
+  <view class='top'>
+    <view>
+      <view class='img'>
+        <open-data type="userAvatarUrl"></open-data>
+      </view>
+      <view class='text'>
+        <open-data type="userNickName"></open-data>
+      </view>
+    </view>
+  </view>
+  <!-- 按钮 -->
+  <view class='btn active' bindtap='submitFun'>派发确认</view>
+  <view class='btn active' bindtap='submitFun1'>现场签到</view>
+  <view class='btn active' bindtap='submitFun2'>活动照片上传</view>
+</scroll-view>

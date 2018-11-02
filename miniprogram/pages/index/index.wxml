@@ -1,0 +1,27 @@
+<!--index.wxml-->
+<scroll-view scroll-y style='height:100vh'>
+  <!-- 微信获取到的信息 -->
+  <view class='top'>
+    <view>
+      <view class='img'>
+        <open-data type="userAvatarUrl"></open-data>
+      </view>
+      <view class='text'>
+        <open-data type="userNickName"></open-data>
+      </view>
+    </view>
+  </view>
+  <view class="main">
+  <view class='data'>
+    <view class='item'>
+      <text>验证码</text>
+      <input type='text' bindinput="bindKeyCode"  placeholder='输入验证码'></input>
+    </view>
+    <view class='text'>
+      请输入由主办方提供的6位字母加数字的验证码，进行管理员验证；
+      注意主办方提供的验证码不能泄露，否则后果自负，
+    </view>
+  </view>
+  <view class='btn active' bindtap='submitFun'>提交验证</view>
+</view>
+</scroll-view>

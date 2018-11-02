@@ -1,0 +1,14 @@
+<!--miniprogram/pages/sigin/sigin.wxml-->
+<view style='height:100vh;'>
+  <view class='top'>
+    <view>
+      <view class='address' id="address" data-address="{{address}}">
+        {{address}}
+      </view>
+      <view class='date' id="date" data-date="{{date}}">
+        {{date}}
+      </view>
+    </view>
+  </view>
+  <view class='btn active' bindtap='submitFun'>签到</view>
+</view>
