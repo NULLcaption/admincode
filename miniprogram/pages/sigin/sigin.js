@@ -1,6 +1,6 @@
 // miniprogram/pages/sigin/sigin.js
 var util = require('../../utils/util.js');
-var app = getApp();
+const app = getApp();
 Page({
 
   /**
@@ -22,34 +22,47 @@ Page({
    * 签到按钮
    */
   submitFun: function(e){
-    console.log("[地址：]" + this.data.address)
-    console.log("[时间：]" + this.data.date)
-    wx.request({
-      url: app.globalData.apiUrl + '/sigin',
-      data: {
-        address: this.data.address,
-        date: this.data.date,
-        openid: app.globalData.openid,
-      },
-      success(res) {
-        console.log("[返回值]" + res.data)
-        if (res.data == "success") {
-          wx.showToast({
-            title: '签到成功',
-            duration: 2000
-          })
-          wx.navigateBack({
-            delta : 1
-          })
-        } else {
-          wx.showToast({
-            title: '签到失败',
-            icon: 'none',
-            duration: 2000
-          })
+    console.log("app.globalData.planId:" + app.globalData.planId)
+    var that = this;
+    if (that.data.address == '' || that.data.date == "") {
+      wx.showToast({
+        icon: 'none',
+        title: '签到地址为空',
+      });
+      return;
+    }
+    if (app.globalData.planId == 'null' || app.globalData.planId == '') {
+      wx.redirectTo({
+        url: '/pages/index/index',
+      })
+    }
+    new Promise((resolve, reject) => {
+      wx.request({
+        url: app.globalData.apiUrl + '/sigin',
+        data: {
+          address: this.data.address,
+          date: this.data.date,
+          openid: app.globalData.openid,
+          avatarUrl: app.globalData.userInfo.avatarUrl,
+          nickName: app.globalData.userInfo.nickName,
+          planId: app.globalData.planId,
+        },
+        success(res) {
+          if (res.data == "success") {
+            wx.redirectTo({
+              url: '/pages/signIndex/siginIndex',
+            })
+          } else {
+            wx.showToast({
+              title: '签到失败，请返回重试',
+              icon: 'none',
+              duration: 2000
+            })
+          }
         }
-      }
-    })
+      })
+    }, 5000)
+
   },
 
   /**
@@ -61,10 +74,8 @@ Page({
     wx.getLocation({
       type: 'gcj02',
       success(res) {
-        console.log(res)
         wx.chooseLocation({
           success: function (res) {
-            console.log("{用户签到地址}："+res.address)
             that.setData({
               address: res.address
             })  

@@ -4,10 +4,10 @@
   <view class='top'>
     <view>
       <view class='img'>
-        <open-data type="userAvatarUrl"></open-data>
+        <open-data type="userAvatarUrl" lang="zh_CN"></open-data>
       </view>
       <view class='text'>
-        <open-data type="userNickName"></open-data>
+        <open-data type="userNickName" lang="zh_CN"></open-data>
       </view>
     </view>
   </view>
@@ -17,11 +17,9 @@
       <text>验证码</text>
       <input type='text' bindinput="bindKeyCode"  placeholder='输入验证码'></input>
     </view>
-    <view class='text'>
-      请输入由主办方提供的6位字母加数字的验证码，进行管理员验证；
-      注意主办方提供的验证码不能泄露，否则后果自负，
-    </view>
   </view>
-  <view class='btn active' bindtap='submitFun'>提交验证</view>
+  <view class='text1'>注意：本系统属于内部管理系统，禁止转发使用。</view>
+  <view class='btn active' bindtap='getUserProfile'>登录</view>
+
 </view>
 </scroll-view>

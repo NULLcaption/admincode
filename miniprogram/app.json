@@ -2,7 +2,6 @@
   "cloud": true,
   "pages": [
     "pages/index/index",
-    "pages/userConsole/userConsole",
     "pages/storageConsole/storageConsole",
     "pages/databaseGuide/databaseGuide",
     "pages/addFunction/addFunction",
@@ -11,11 +10,17 @@
     "pages/signIndex/siginIndex",
     "pages/sigin/sigin"
   ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "小程序将会获取您的位置，并记录你的签到信息。"
+    }
+  },
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "香飘飘",
+    "navigationBarTitleText": "管理系统",
     "navigationBarTextStyle": "black"
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }

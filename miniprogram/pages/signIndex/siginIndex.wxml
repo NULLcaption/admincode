@@ -4,15 +4,16 @@
   <view class='top'>
     <view>
       <view class='img'>
-        <open-data type="userAvatarUrl"></open-data>
+        <open-data type="userAvatarUrl" lang="zh_CN"></open-data>
       </view>
       <view class='text'>
-        <open-data type="userNickName"></open-data>
+        <open-data type="userNickName"  lang="zh_CN"></open-data>
       </view>
     </view>
   </view>
   <!-- 按钮 -->
-  <view class='btn active' bindtap='submitFun'>派发确认</view>
   <view class='btn active' bindtap='submitFun1'>现场签到</view>
+  <view class='btn active' bindtap='submitFun3'>现场扫码核销</view>
+  <view class='btn active' bindtap='submitFun'>派发数量确认</view>
   <view class='btn active' bindtap='submitFun2'>活动照片上传</view>
 </scroll-view>

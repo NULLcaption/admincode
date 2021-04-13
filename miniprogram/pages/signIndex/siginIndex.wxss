@@ -25,7 +25,7 @@
   font-size: 18px;
   color: #FFFFFF;
   text-align:center;
-  margin:50px 30px;
+  margin:10px 20px;
   border-radius:2px;
 }
 
@@ -38,4 +38,19 @@
   position: fixed;
   bottom: 0;
   right: 0;
+}
+
+.title{
+  padding: 10px 0;
+}
+
+.title text{
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+.title .sb{
+  font-size: 12px;
+  color: #ff1919;
 }

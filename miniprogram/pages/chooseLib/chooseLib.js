@@ -6,6 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    list: [],
+    count: '0',
     scanCodeInfo:''
   },
 
@@ -23,7 +25,8 @@ Page({
         wx.request({
           url: app.globalData.apiUrl+'/userInfo',
           data : {
-            scanCodeInfo: res.result
+            scanCodeInfo: res.result,
+            planId: app.globalData.planId
           },
           success(res) {
             console.log("[返回值]"+res.data)
@@ -33,23 +36,19 @@ Page({
                 icon: 'none',
                 duration: 2000
               })
+              that.onLoad();
             } else {
               wx.showToast({
                 title: '该用户领取过了',
                 icon: 'none',
                 duration: 2000
               })
+              if (getCurrentPages().length != 0) {
+                getCurrentPages()[getCurrentPages().length - 1].onLoad;
+              }
             }
           }
         })
-        // that.setData({
-        //   scanCodeInfo: res.result
-        // })
-        // wx.showToast({
-        //   title: '扫描成功',
-        //   icon: 'success',
-        //   duration: 2000
-        // })
       },
       fail: (res) => {
         wx.showToast({
@@ -65,7 +64,47 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.getPlanUserInfoCount();
+    this.getPlanUserInfo();
+  },
 
+  /**
+   * 获取参加活动的用户数量
+   */
+  getPlanUserInfoCount: function() {
+    var that = this;
+    var count;
+    wx.request({
+      url: app.globalData.apiUrl + '/userCount',
+      data: {
+        planId: app.globalData.planId
+      },
+      success(res) {
+        that.setData({
+          count : res.data
+        })
+      }
+    })
+  },
+
+  /**
+   * 获取参加活动的用户列表
+   */
+  getPlanUserInfo: function() {
+    var that = this;
+    var list;
+    wx.request({
+      url: app.globalData.apiUrl + '/userInfos',
+      data: {
+        planId: app.globalData.planId
+      },
+      
+      success(res) {
+        that.setData({
+          list : res.data
+        })
+      }
+    })
   },
 
   /**

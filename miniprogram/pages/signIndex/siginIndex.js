@@ -5,7 +5,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-
   },
 
   /**
@@ -30,63 +29,83 @@ Page({
   submitFun2: function () {
     this.doUpload();
   },
-
+  
   // 上传图片
   doUpload: function () {
+    console.log("app.globalData.planId:" + app.globalData.planId)
+    if (app.globalData.openid == ''
+      || app.globalData.storeId == '' || app.globalData.openid == 'null') {
+      wx.navigateTo({
+        url: '/pages/index/index',
+      })
+    }
+    if (app.globalData.planId == 'null' || app.globalData.planId == '') {
+      wx.navigateTo({
+        url: '/pages/index/index',
+      })
+    }
     // 选择图片
     wx.chooseImage({
-      count: 1,
-      sizeType: ['compressed'],
-      sourceType: ['album', 'camera'],
+      count: 1,//最多可以选择的图片总数  
+      sizeType: ['compressed'],// 可以指定是原图还是压缩图，默认二者都有  
+      sourceType: ['camera', 'album'],// 可以指定来源是相册还是相机，默认二者都有  'album'
       success: function (res) {
-
+        //上传等待
         wx.showLoading({
-          title: '上传中',
+          title: '正在上传...',
+          icon: 'loading',
+          mask: true,
+          duration: 500  
         })
-
-        const filePath = res.tempFilePaths[0]
-
+        //文件路径
+        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+        const filePath = res.tempFilePaths;
         // 上传图片
-        const cloudPath = 'my-image' + filePath.match(/\.[^.]+?$/)[0]
-        // wx.uploadFile({
-        //   url: app.globalData.apiUrl+'/upload',
-        //   filePath: filePath,
-        //   name: cloudPath,
-        //   formData: {
-        //     //do something
-        //   },
-        //   success(res) {
-        //     //do something
-        //   }
-          
-        // }),
-        wx.cloud.uploadFile({
-          cloudPath,
-          filePath,
-          success: res => {
-            console.log('[上传文件] 成功：', res)
-
-            app.globalData.fileID = res.fileID
-            app.globalData.cloudPath = cloudPath
-            app.globalData.imagePath = filePath
-
-            wx.showToast({
-              icon: 'success',
-              title: '上传成功',
-            })
-
-          },
-          fail: e => {
-            console.error('[上传文件] 失败：', e)
-            wx.showToast({
-              icon: 'none',
-              title: '上传失败',
-            })
-          },
-          complete: () => {
-            wx.hideLoading()
-          }
-        })
+        var uploadImgCount = 0;  
+        for (var i = 0; i <= filePath.length; i++) {
+          // const cloudPath = 'my-image' + filePath[i].match(/\.[^.]+?$/)[0];
+          wx.uploadFile({
+            url: app.globalData.apiUrl+'/upload',
+            filePath: filePath[i],
+            name: 'file',
+            header: {
+              "Content-Type": "multipart/form-data"
+            },
+            formData: {
+              planId: app.globalData.planId+'',
+              openId: app.globalData.openid+'',
+              index : i+'',
+            },
+            success: function (res) {
+              console.log("[res.data]:" + res.data)
+              if (res.data == 'success') {
+                uploadImgCount++;
+                //如果是最后一张,则隐藏等待中
+                if (uploadImgCount == filePath.length) { 
+                  wx.showToast({
+                    icon: 'none',
+                    title: '图片上传成功！',
+                  })
+                }
+              } else if (res.data == 'error_1') {
+                wx.showToast({
+                  icon: 'none',
+                  title: '请先签到后再上传',
+                })
+              } else if (res.data == 'error_2') {
+                wx.showToast({
+                  icon: 'none',
+                  title: '数据保存失败',
+                })
+              } else {
+                wx.showToast({
+                  icon: 'none',
+                  title: '图片上传失败',
+                })
+              }
+            },
+          })
+        }
       },
       fail: e => {
         console.error(e)
@@ -95,58 +114,54 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面加载
+   * 现场扫码核销
    */
-  onLoad: function (options) {
-
+  submitFun3: function(){
+    wx.scanCode({
+      onlyFromCamera: true,
+      success (res) {
+        wx.request({
+          url: app.globalData.apiUrl + '/submit1',
+          data: {
+            planId: res.result
+          },
+          success(res) {
+            if (res.data.code == 0) {
+              wx.showModal({
+                title: '提示',
+                content: '用户核销成功！',
+                success (res) {
+                  if (res.confirm) {
+                    wx.navigateBack({
+                      delta: 0,
+                    })
+                  } else if (res.cancel) {
+                    wx.navigateBack({
+                      delta: 0,
+                    })
+                  }
+                }
+              })
+            } else {
+              wx.showModal({
+                title: '注意',
+                content: '该用户已经参加过活动了，不能再领取了！',
+                success (res) {
+                  if (res.confirm) {
+                    wx.navigateBack({
+                      delta: 0,
+                    })
+                  } else if (res.cancel) {
+                    wx.navigateBack({
+                      delta: 0,
+                    })
+                  }
+                }
+              })
+            }
+          }
+        })
+      }
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

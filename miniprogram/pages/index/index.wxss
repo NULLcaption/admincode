@@ -78,3 +78,10 @@
 .active{
   background:#00CD00;
 }
+
+.text1{
+  font-size: 12px;
+  color: #ff5f19;
+  background: #fff;
+  padding: 10px 20px;
+}

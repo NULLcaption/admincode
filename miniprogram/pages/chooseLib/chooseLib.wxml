@@ -1,38 +1,22 @@
 <!--pages/chooseLib/chooseLib.wxml-->
+<view class='title'>
+      <text class='cn'>已参加活动人数</text>
+      <text class='en'>{{count}}</text>
+</view>
 <view class="container">
   <!-- 已参加活动用户列表 -->
-  <view class="list">
+  <view class="list" wx:for="{{list}}">
     <view class='content'>
-      <image src='/images/birthday.png'></image>
+      <image src='{{item.avatarUrl}}'></image>
       <view class='text'>
-          <view class='title'>{{scanCodeInfo}}</view>
+          <view class='title'>{{item.nickName}}</view>
           <view class='price'>
-            <text>已参加</text>
-          </view>
-      </view>
-    </view>
-
-    <view class='content'>
-      <image src='/images/birthday.png'></image>
-      <view class='text'>
-          <view class='title'>{{scanCodeInfo}}</view>
-          <view class='price'>
-            <text>已参加</text>
-          </view>
-      </view>
-    </view>
-
-    <view class='content'>
-      <image src='/images/birthday.png'></image>
-      <view class='text'>
-          <view class='title'>{{scanCodeInfo}}</view>
-          <view class='price'>
-            <text>已领取</text>
-          </view>
+            <text>{{item.status}}</text>
+          </view> 
       </view>
     </view>
   </view>
   <!-- 扫码验证 -->
-  <view class='btn' bindtap='submitFun'>扫一扫</view>
+  <!-- <view class='btn' bindtap='submitFun'>扫一扫</view> -->
 </view>
 
